@@ -22,11 +22,17 @@ public class BeanToMapConverter {
     }
 
     private Stream<KeyValue> convertBean(Object bean) {
+        if (bean == null)
+            return Stream.empty();
+
         val stream = convertViaJackson(bean);
         return stream.flatMap(this::remap);
     }
 
     private Stream<KeyValue> remap(KeyValueRaw kv) {
+        if (kv.value == null)
+            return Stream.empty();
+
         if (isList(kv)) {
             return processList(kv);
         }

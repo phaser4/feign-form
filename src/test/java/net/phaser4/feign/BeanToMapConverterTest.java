@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BeanToMapConverterTest {
@@ -54,6 +55,33 @@ public class BeanToMapConverterTest {
 
         assertThat(map.get("inner.field1")).isEqualTo("10");
         assertThat(map.get("inner.field2")).isEqualTo("A");
+    }
+
+    @Test
+    public void shouldIgnoreNulls() {
+        val map = new BeanToMapConverter().convert(null);
+
+        assertThat(map).isEmpty();
+    }
+
+    @Test
+    public void shouldIgnoreNullsInFields() {
+        val bean = new Object() {
+            @Getter private final String value = null;
+        };
+
+        val map = new BeanToMapConverter().convert(bean);
+        assertThat(map).isEmpty();
+    }
+
+    @Test
+    public void shouldIgnoreNullsInLists() {
+        val bean = new Object() {
+            @Getter public final List<String> value = singletonList(null);
+        };
+
+        val map = new BeanToMapConverter().convert(bean);
+        assertThat(map).isEmpty();
     }
 
     @Test

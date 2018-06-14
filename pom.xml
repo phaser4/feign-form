@@ -6,7 +6,7 @@
 
     <groupId>com.github.phaser4</groupId>
     <artifactId>feign-form</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <licenses>
         <license>
